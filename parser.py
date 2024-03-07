@@ -9,10 +9,10 @@ PATH = "C:/Users/SSAFY/flights-data"
 
 DOMAIN = "https://www.airportal.go.kr/life/airinfo/RbHanList.jsp"
 
-COLUMNS = ["날짜", "항공사", "편명", "출발지", "계획", "예상", "도착", "구분", "현황", "지연사유"]
+COLUMNS = ["날짜", "항공사", "편명", "출발지", "계획", "예상", "도착", "구분", "현황", "사유"]
 
 PREFIX = "ddrivetip('"
-SUFFIX = "에 의한 지연'"
+SUFFIX = "에 의한"
 
 
 def request(date, dep_arr):
@@ -25,9 +25,10 @@ def request(date, dep_arr):
             row_data.append(text)
 
             if index == 14:
+                success = '출발' if dep_arr == 'D' else '도착'
                 row_data.append(
                         string[string.find(PREFIX) + len(PREFIX):string.find(
-                                SUFFIX)] if text == '지연' else '')
+                                SUFFIX)] if text != success else '')
         # print(row_data)
         return row_data
 
