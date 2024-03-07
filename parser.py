@@ -15,7 +15,7 @@ PREFIX = "ddrivetip('"
 SUFFIX = "에 의한 지연'"
 
 
-def request(date):
+def request(date, dep_arr):
     def extract(row):
         row_data = [date]
         for index in range(0, len(row), 2):
@@ -34,7 +34,7 @@ def request(date):
     cat = pd.DataFrame(columns=COLUMNS)
     params = {
         "gubun": "c_getList",
-        "depArr": "A",
+        "depArr": dep_arr,
         "current_date": date,
         "airport": "RKSI",
         "al_icao": "",
@@ -62,8 +62,8 @@ def request(date):
     cat = cat.reset_index(drop=True)
 
     # create csv
-    cat.to_csv(PATH + '/data/data' + date + '.' + str(time.time()) + '.csv',
-               encoding='cp949', index=False)
+    filename = f"{PATH}/data/{date}{dep_arr}.{str(time.time())}.csv"
+    cat.to_csv(filename, encoding='cp949', index=False)
 
     print(cat.head(5))
     print("new data.csv file created. length: ", len(cat))
@@ -81,8 +81,11 @@ def init():
 
     date = start_date
     while date <= end_date:
-        print(date.strftime("%Y%m%d"))
-        request(date.strftime("%Y%m%d"))
+        formatted = date.strftime("%Y%m%d")
+        print(formatted)
+        request(formatted, 'D')
+        request(formatted, 'A')
+
         date += timedelta(days=1)
 
 
