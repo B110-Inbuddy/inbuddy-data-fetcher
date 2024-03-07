@@ -88,6 +88,7 @@ def init():
         request(formatted, 'A')
 
         date += timedelta(days=1)
+        time.sleep(5)
 
 
 init()
