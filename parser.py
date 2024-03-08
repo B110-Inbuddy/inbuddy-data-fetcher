@@ -77,8 +77,8 @@ def init():
         os.remove(PATH + '/data')
         os.mkdir(PATH + '/data')
 
-    start_date = datetime(2017, 1, 1)
-    end_date = datetime(2017, 1, 2)
+    start_date = datetime(2014, 9, 1)
+    end_date = datetime(2016, 12, 31)
 
     date = start_date
     while date <= end_date:
